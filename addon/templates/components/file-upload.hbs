@@ -1,0 +1,15 @@
+{{#if label}}
+  <label>{{label}}</label>
+{{/if}}
+<input type="file" multiple="true" onchange={{action "selectFile"}}>
+{{#if error}}
+  <ul>
+    {{#if exceedsFileSize}}
+      <li>{{t 'base.helpers.file_upload.max_size_exceeded' name=filename size=maxFileSize}}</li>
+    {{/if}}
+    {{#if unallowedFileType}}
+      <li>{{t 'base.helpers.file_upload.invalid_extension' name=filename extensions=allowedExtensions}}</li>
+    {{/if}}
+  </ul>
+{{/if}}
+
