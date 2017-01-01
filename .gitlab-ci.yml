@@ -10,4 +10,4 @@ test:
     - ember test
 
 stages:
-  - tests
+  - test
