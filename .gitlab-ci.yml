@@ -5,7 +5,7 @@ cache:
     - node_modules/
 
 before_script:
-  - npm install --silent phantomjs-prebuilt ember-cli jshint bower
+  - npm install --silent -g phantomjs-prebuilt ember-cli jshint bower
 
 test:
   stage: test
