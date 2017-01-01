@@ -1,7 +1,7 @@
 {{#if label}}
   <label>{{label}}</label>
 {{/if}}
-<input type="file" multiple="true" onchange={{action "selectFile"}}>
+<input type="file" multiple="true" data-value={{value}} onchange={{action "selectFile"}}>
 {{#if error}}
   <ul>
     {{#if exceedsFileSize}}

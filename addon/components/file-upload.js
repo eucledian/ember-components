@@ -6,7 +6,6 @@ export default Ember.Component.extend({
   maxFileSize: 5,
   allowedExtensions: ['jpg', 'png', 'pdf'],
   filename: null,
-  fileValue: null,
   label: null,
   unallowedFileType: false,
   error: false,
@@ -15,37 +14,51 @@ export default Ember.Component.extend({
   computedSize: Ember.computed('maxFileSize', function(){
     return this.get('maxFileSize') * 1024 * 1024;
   }),
+  readFile(file){
+    return new Ember.RSVP.Promise((resolve, reject)=>{
+      let fileData;
+      const reader = new FileReader();
+
+      reader.onload = ()=>{
+        Ember.run(() =>{
+          fileData = reader.result;
+          this.set('value', fileData);
+          resolve();
+        });
+      };
+
+      reader.onerror = ()=>{
+        Ember.run(()=>{ reject(); });
+      };
+
+      if (file){
+        reader.readAsDataURL(file);
+      }
+    });
+  },
   actions: {
     selectFile(e){
-      const reader = new FileReader();
       const file = e.target.files[0];
-    
+
       if (file === undefined){
         this.set('value', undefined);
         return false;
       }
-      
-      let fileData;
+
       let fileExtension = file.name.split('.')[file.name.split('.').length - 1];
-      
+
       this.set('filename', file.name);
       this.set('exceedsFileSize', file.size > this.get('computedSize'));
       this.set('unallowedFileType', this.get('allowedExtensions').indexOf(fileExtension) === -1);
-      
+
       if(this.get('exceedsSize') || this.get('unallowedFileType')){
         this.set('error', true);
         e.target.value = '';
         return false;
       }
-      
-      reader.onload = ()=>{
-        fileData = reader.result;
-        this.set('value', fileData);
-      };
-      
-      if (file){
-        reader.readAsDataURL(file);
-      }
+      this.readFile(file).then(()=>{
+        // TODO: paint a checkmark
+      });
     }
   }
 });
