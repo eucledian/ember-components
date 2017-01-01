@@ -1,0 +1,13 @@
+image: node:7.0.0
+
+before_script:
+  - npm install phantomjs-prebuilt ember-cli jshint
+
+test:
+  stage: test
+  script:
+    - npm install && bower install
+    - ember test
+
+stages:
+  - tests
