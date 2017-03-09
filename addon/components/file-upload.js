@@ -4,7 +4,7 @@ import layout from '../templates/components/file-upload';
 export default Ember.Component.extend({
   layout,
   maxFileSize: 5,
-  allowedExtensions: ['jpg', 'png', 'pdf'],
+  allowedExtensions: ['jpg', 'png', 'pdf', 'jpeg'],
   filename: null,
   label: null,
   unallowedFileType: false,
