@@ -15,7 +15,7 @@ export default Ember.Component.extend({
     return this.get('maxFileSize') * 1024 * 1024;
   }),
   resetField: Ember.observer('value', function(){
-    this.$('input[file]').val(''):
+    this.$('input[file]').val('');
   }),
   readFile(file){
     return new Ember.RSVP.Promise((resolve, reject)=>{
